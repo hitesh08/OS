@@ -8,7 +8,7 @@ struct process{
 	float priority;
 };
 
-void display(struct process proc[],int num){
+void display(struct process proc[],int num,int p[]){
 	int i;
 	printf("The input process details are as shown below\n");
 	printf("Sn\tProcess\tBurst-time\tArrival-time\n");
@@ -18,10 +18,34 @@ void display(struct process proc[],int num){
 	}
 }
 
+void sort(struct process proc[],int num,int p[]){
+	int i,j,pos;
+	float temp;
+	for(i=0;i<num;i++)
+    {
+        pos=i;
+        for(j=i+1;j<num;j++)
+        {
+            if(proc[j].burst_time<proc[pos].burst_time)
+                pos=j;
+        }
+ 
+        temp=proc[i].burst_time;
+        proc[i].burst_time=proc[pos].burst_time;
+        proc[pos].burst_time=temp;
+ 
+        temp=p[i];
+        p[i]=p[pos];
+        p[pos]=temp;
+    }
+    display(proc,num,p);
+}
+
 int main(){
 	int i;//loop variable
 	static int num;//holds number of process
 	struct process proc[num];//array of struct to hold multiple propeties of a single process
+	int p[num];
 	printf("Enter the number of process:");
 	scanf("%d",&num);
 	
@@ -38,9 +62,12 @@ int main(){
 		scanf("%f",&proc[i].arrival_time);
 		
 		printf("\n");
-			
+		p[i]=i;
 	} 	
 	//output the input pricess details
-	display(proc,num);
+	display(proc,num,p);
+	
+	//sort acc to busrt time
+	sort(proc,num,p);
 	
 }
