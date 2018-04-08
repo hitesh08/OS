@@ -59,7 +59,7 @@ void sort(struct process proc[],int num){
 
 void schedule(struct process proc[],int num,int sum){
 	int i,j;
-	float f,avgWaitingTime=0;
+	float f,avgWaitingTime=0,avgTurnaroundTime=0;
 	sort(proc,num);//sort according to the process arrival time
 	printf("\nProcess\tBurst Time\tArrival Time\tWaiting Time\tTurn-Around Time\n");
 	for(f=proc[0].arrival_time;f<(float)sum;){
@@ -85,6 +85,8 @@ void schedule(struct process proc[],int num,int sum){
 		proc[nxt].turnAroundTime=f-proc[nxt].arrival_time;
 		//average waiting time
 		avgWaitingTime+=proc[nxt].waiting_time;
+		//average turn around time
+		avgTurnaroundTime+=proc[nxt].turnAroundTime;
 		//update status
 		proc[nxt].status=1;
 		
@@ -93,6 +95,8 @@ void schedule(struct process proc[],int num,int sum){
 		
 	}
 	printf("Average waiting time=%f\n",avgWaitingTime/num);
+	printf("Average turn-around time=%f\n",avgTurnaroundTime/num);
+	
 }
 
 int main(){
